@@ -5,18 +5,18 @@ function mel($mel, $time, $link, $stmt, $query_id, $VD_login, $server_ip, $sessi
 }
 
 function select($stmt, $link) {
-	$rslt = mysqli_query($stmt, $link);
+	$rslt = mysql_query($stmt, $link);
 	return $rslt;
 }
 
 function insert($stmt, $link) {
-	mysqli_query($stmt, $link);
+	mysql_query($stmt, $link);
 }
 
 function queryFetch($stmt, $link, $mel, $time, $link, $stmt, $query_id, $VD_login, $server_ip, $session_name, $one_mysql_log) {
 	$rslt = select($stmt, $link);
 	mel($mel, $time, $link, $stmt, $query_id, $VD_login, $server_ip, $session_name, $one_mysql_log);
-	$row = mysqli_fetch_row($rslt);
+	$row = mysql_fetch_row($rslt);
 
 	return $row;
 }
@@ -24,7 +24,7 @@ function queryFetch($stmt, $link, $mel, $time, $link, $stmt, $query_id, $VD_logi
 function queryNum($stmt, $link, $mel, $time, $link, $stmt, $query_id, $VD_login, $server_ip, $session_name, $one_mysql_log) {
 	$rslt = select($stmt, $link);
 	mel($mel, $time, $link, $stmt, $query_id, $VD_login, $server_ip, $session_name, $one_mysql_log);
-	$num = mysqli_num_rows($rslt);
+	$num = mysql_num_rows($rslt);
 
 	return $num;
 }

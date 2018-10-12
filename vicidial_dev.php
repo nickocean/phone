@@ -468,15 +468,17 @@ if ($campaign_login_list > 0)
 		{
 		$stmt="SELECT user_group from vicidial_users where user='$VD_login' and pass='$VD_pass';";
 		if ($non_latin > 0) {$rslt=mysql_query("SET NAMES 'UTF8'");}
-		$rslt=mysql_query($stmt, $link);
-				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01002',$VD_login,$server_ip,$session_name,$one_mysql_log);}
-		$row=mysql_fetch_row($rslt);
+		/*$rslt=mysql_query($stmt, $link);
+			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01002',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+			$row=mysql_fetch_row($rslt);*/
+		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01002',$VD_login,$server_ip,$session_name,$one_mysql_log);
 		$VU_user_group=$row[0];
 
 		$stmt="SELECT allowed_campaigns from vicidial_user_groups where user_group='$VU_user_group';";
-		$rslt=mysql_query($stmt, $link);
+		/*$rslt=mysql_query($stmt, $link);
 				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01003',$VD_login,$server_ip,$session_name,$one_mysql_log);}
-		$row=mysql_fetch_row($rslt);
+		$row=mysql_fetch_row($rslt);*/
+		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01003',$VD_login,$server_ip,$session_name,$one_mysql_log);
 		if ( (!eregi("ALL-CAMPAIGNS",$row[0])) )
 			{
 			$LOGallowed_campaignsSQL = eregi_replace(' -','',$row[0]);
@@ -495,9 +497,10 @@ if ($campaign_login_list > 0)
 
 		$stmt="SELECT count(*) from vicidial_users where user='$MGR_login' and pass='$MGR_pass' and manager_shift_enforcement_override='1' and active='Y';";
 		if ($DB) {echo "|$stmt|\n";}
-		$rslt=mysql_query($stmt, $link);
+		/*$rslt=mysql_query($stmt, $link);
 				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01058',$VD_login,$server_ip,$session_name,$one_mysql_log);}
-		$row=mysql_fetch_row($rslt);
+		$row=mysql_fetch_row($rslt);*/
+		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01058',$VD_login,$server_ip,$session_name,$one_mysql_log);
 		$MGR_auth=$row[0];
 
 		if($MGR_auth>0)
