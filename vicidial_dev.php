@@ -468,13 +468,15 @@ if ($campaign_login_list > 0)
 		{
 		$stmt="SELECT user_group from vicidial_users where user='$VD_login' and pass='$VD_pass';";
 		if ($non_latin > 0) {$rslt=mysqli_query("SET NAMES 'UTF8'");}
-		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01002',$VD_login,$server_ip,$session_name,$one_mysql_log);
-		print_r($row);
+		$rslt=mysqli_query($stmt, $link);
+				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01002',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+		$row=mysqli_fetch_row($rslt);
 		$VU_user_group=$row[0];
 
 		$stmt="SELECT allowed_campaigns from vicidial_user_groups where user_group='$VU_user_group';";
-		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01003',$VD_login,$server_ip,$session_name,$one_mysql_log);
-		print_r($row);
+		$rslt=mysqli_query($stmt, $link);
+				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01003',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+		$row=mysqli_fetch_row($rslt);
 		if ( (!preg_match("ALL-CAMPAIGNS",$row[0])) )
 			{
 			$LOGallowed_campaignsSQL = preg_replace(' -','',$row[0]);
