@@ -363,8 +363,8 @@ $random = (rand(1000000, 9999999) + 10000000);
 #############################################
 ##### START SYSTEM_SETTINGS LOOKUP #####
 $stmt = "SELECT use_non_latin,vdc_header_date_format,vdc_customer_date_format,vdc_header_phone_format,webroot_writable,timeclock_end_of_day,vtiger_url,enable_vtiger_integration,outbound_autodial_active,enable_second_webform,user_territories_active FROM system_settings;";
-
-$rslt = select($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01001',$VD_login,$server_ip,$session_name,$one_mysql_log);
+$rslt=mysql_query($stmt, $link);
+	if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01001',$VD_login,$server_ip,$session_name,$one_mysql_log);}
 if ($DB) {echo "$stmt\n";}
 $qm_conf_ct = mysql_num_rows($rslt);
 if ($qm_conf_ct > 0)
@@ -468,11 +468,16 @@ if ($campaign_login_list > 0)
 		{
 		$stmt="SELECT user_group from vicidial_users where user='$VD_login' and pass='$VD_pass';";
 		if ($non_latin > 0) {$rslt=mysql_query("SET NAMES 'UTF8'");}
+		/*$rslt=mysql_query($stmt, $link);
+			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01002',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+			$row=mysql_fetch_row($rslt);*/
 		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01002',$VD_login,$server_ip,$session_name,$one_mysql_log);
 		$VU_user_group=$row[0];
 
 		$stmt="SELECT allowed_campaigns from vicidial_user_groups where user_group='$VU_user_group';";
-		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01003',$VD_login,$server_ip,$session_name,$one_mysql_log);
+		$rslt=mysql_query($stmt, $link);
+				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01003',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+		$row=mysql_fetch_row($rslt);
 		if ( (!eregi("ALL-CAMPAIGNS",$row[0])) )
 			{
 			$LOGallowed_campaignsSQL = eregi_replace(' -','',$row[0]);
@@ -491,7 +496,9 @@ if ($campaign_login_list > 0)
 
 		$stmt="SELECT count(*) from vicidial_users where user='$MGR_login' and pass='$MGR_pass' and manager_shift_enforcement_override='1' and active='Y';";
 		if ($DB) {echo "|$stmt|\n";}
-		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01058',$VD_login,$server_ip,$session_name,$one_mysql_log);
+		$rslt=mysql_query($stmt, $link);
+				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01058',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+		$row=mysql_fetch_row($rslt);
 		$MGR_auth=$row[0];
 
 		if($MGR_auth>0)
@@ -519,6 +526,7 @@ if ($campaign_login_list > 0)
 	$rslt=mysql_query($stmt, $link);
 				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01004',$VD_login,$server_ip,$session_name,$one_mysql_log);}
 	$camps_to_print = mysql_num_rows($rslt);
+
 	$o=0;
 	while ($camps_to_print > $o) 
 		{
@@ -735,7 +743,9 @@ echo "<TD WIDTH=100 ALIGN=RIGHT VALIGN=TOP  NOWRAP><a href=\"../agc_en/vicidial.
 		{
 		$stmt="SELECT phone_login,phone_pass from vicidial_users where user='$VD_login' and pass='$VD_pass' and user_level > 0 and active='Y';";
 		if ($DB) {echo "|$stmt|\n";}
-		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01005',$VD_login,$server_ip,$session_name,$one_mysql_log);
+		$rslt=mysql_query($stmt, $link);
+			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01005',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+		$row=mysql_fetch_row($rslt);
 		$phone_login=$row[0];
 		$phone_pass=$row[1];
 
@@ -823,7 +833,9 @@ $VDloginDISPLAY=0;
 	{
 	$stmt="SELECT count(*) from vicidial_users where user='$VD_login' and pass='$VD_pass' and user_level > 0 and active='Y';";
 	if ($DB) {echo "|$stmt|\n";}
-	$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01006',$VD_login,$server_ip,$session_name,$one_mysql_log);
+	$rslt=mysql_query($stmt, $link);
+			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01006',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+	$row=mysql_fetch_row($rslt);
 	$auth=$row[0];
 
 	if($auth>0)
