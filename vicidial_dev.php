@@ -821,9 +821,7 @@ $VDloginDISPLAY=0;
 	{
 	$stmt="SELECT count(*) from vicidial_users where user='$VD_login' and pass='$VD_pass' and user_level > 0 and active='Y';";
 	if ($DB) {echo "|$stmt|\n";}
-	$rslt=mysql_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01006',$VD_login,$server_ip,$session_name,$one_mysql_log);}
-	$row=mysql_fetch_row($rslt);
+	$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01006',$VD_login,$server_ip,$session_name,$one_mysql_log);
 	$auth=$row[0];
 
 	if($auth>0)
@@ -832,9 +830,7 @@ $VDloginDISPLAY=0;
 		$password=strtoupper($VD_pass);
 		##### grab the full name of the agent
 		$stmt="SELECT full_name,user_level,hotkeys_active,agent_choose_ingroups,scheduled_callbacks,agentonly_callbacks,agentcall_manual,vicidial_recording,vicidial_transfers,closer_default_blended,user_group,vicidial_recording_override,alter_custphone_override,alert_enabled,agent_shift_enforcement_override,shift_override_flag,allow_alerts,closer_campaigns,agent_choose_territories,custom_one,custom_two,custom_three,custom_four,custom_five from vicidial_users where user='$VD_login' and pass='$VD_pass'";
-		$rslt=mysql_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01007',$VD_login,$server_ip,$session_name,$one_mysql_log);}
-		$row=mysql_fetch_row($rslt);
+		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01007',$VD_login,$server_ip,$session_name,$one_mysql_log);
 		$LOGfullname =							$row[0];
 		$user_level =							$row[1];
 		$VU_hotkeys_active =					$row[2];
@@ -866,9 +862,7 @@ $VDloginDISPLAY=0;
 
 		### Gather timeclock and shift enforcement restriction settings
 		$stmt="SELECT forced_timeclock_login,shift_enforcement,group_shifts,agent_status_viewable_groups,agent_status_view_time from vicidial_user_groups where user_group='$VU_user_group';";
-		$rslt=mysql_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01052',$VD_login,$server_ip,$session_name,$one_mysql_log);}
-		$row=mysql_fetch_row($rslt);
+		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01052',$VD_login,$server_ip,$session_name,$one_mysql_log);
 		$forced_timeclock_login =	$row[0];
 		$shift_enforcement =		$row[1];
 		$LOGgroup_shiftsSQL = eregi_replace('  ','',$row[2]);
