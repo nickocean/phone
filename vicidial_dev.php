@@ -285,6 +285,7 @@ $mysql_log_count=64;
 $one_mysql_log=0;
 
 require("dbconnect.php");
+require_once "functions.php";
 
 if (isset($_GET["DB"]))						    {$DB=$_GET["DB"];}
         elseif (isset($_POST["DB"]))            {$DB=$_POST["DB"];}
@@ -319,7 +320,7 @@ if (!isset($phone_pass))
 if (isset($VD_campaign))
 	{
 	$VD_campaign = strtoupper($VD_campaign);
-	$VD_campaign = eregi_replace(" ",'',$VD_campaign);
+	$VD_campaign = preg_replace(" ",'',$VD_campaign);
 	}
 if (!isset($flag_channels))
 	{
@@ -328,12 +329,12 @@ if (!isset($flag_channels))
 	}
 
 ### security strip all non-alphanumeric characters out of the variables ###
-$DB=ereg_replace("[^0-9a-z]","",$DB);
-$phone_login=ereg_replace("[^\,0-9a-zA-Z]","",$phone_login);
-$phone_pass=ereg_replace("[^0-9a-zA-Z]","",$phone_pass);
-$VD_login=ereg_replace("[^-_0-9a-zA-Z]","",$VD_login);
-$VD_pass=ereg_replace("[^-_0-9a-zA-Z]","",$VD_pass);
-$VD_campaign = ereg_replace("[^-_0-9a-zA-Z]","",$VD_campaign);
+$DB=preg_replace("[^0-9a-z]","",$DB);
+$phone_login=preg_replace("[^\,0-9a-zA-Z]","",$phone_login);
+$phone_pass=preg_replace("[^0-9a-zA-Z]","",$phone_pass);
+$VD_login=preg_replace("[^-_0-9a-zA-Z]","",$VD_login);
+$VD_pass=preg_replace("[^-_0-9a-zA-Z]","",$VD_pass);
+$VD_campaign = preg_replace("[^-_0-9a-zA-Z]","",$VD_campaign);
 
 
 $forever_stop=0;
@@ -362,13 +363,13 @@ $random = (rand(1000000, 9999999) + 10000000);
 #############################################
 ##### START SYSTEM_SETTINGS LOOKUP #####
 $stmt = "SELECT use_non_latin,vdc_header_date_format,vdc_customer_date_format,vdc_header_phone_format,webroot_writable,timeclock_end_of_day,vtiger_url,enable_vtiger_integration,outbound_autodial_active,enable_second_webform,user_territories_active FROM system_settings;";
-$rslt=mysql_query($stmt, $link);
+$rslt=mysqli_query($stmt, $link);
 	if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01001',$VD_login,$server_ip,$session_name,$one_mysql_log);}
 if ($DB) {echo "$stmt\n";}
-$qm_conf_ct = mysql_num_rows($rslt);
+$qm_conf_ct = mysqli_num_rows($rslt);
 if ($qm_conf_ct > 0)
 	{
-	$row=mysql_fetch_row($rslt);
+	$row=mysqli_fetch_row($rslt);
 	$non_latin =					$row[0];
 	$vdc_header_date_format =		$row[1];
 	$vdc_customer_date_format =		$row[2];
@@ -441,12 +442,12 @@ $browser = getenv("HTTP_USER_AGENT");
 $script_name = getenv("SCRIPT_NAME");
 $server_name = getenv("SERVER_NAME");
 $server_port = getenv("SERVER_PORT");
-if (eregi("443",$server_port)) {$HTTPprotocol = 'https://';}
+if (preg_match("443",$server_port)) {$HTTPprotocol = 'https://';}
   else {$HTTPprotocol = 'http://';}
 if (($server_port == '80') or ($server_port == '443') ) {$server_port='';}
 else {$server_port = "$CL$server_port";}
 $agcPAGE = "$HTTPprotocol$server_name$server_port$script_name";
-$agcDIR = eregi_replace('vicidial.php','',$agcPAGE);
+$agcDIR = preg_replace('vicidial.php','',$agcPAGE);
 
 
 header ("Content-type: text/html; charset=utf-8");
