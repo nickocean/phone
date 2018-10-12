@@ -278,6 +278,10 @@
 # 100301-1329 - Changed AGENTDIRECT user selection launching to AGENTS link next to number-to-dial field
 #
 
+function mel($mel, $time, $link, $stmt, $query_id, $VD_login, $server_ip, $session_name, $one_mysql_log) {
+	if ($mel > 0) {mysql_error_logging($time,$link,$mel,$stmt,$query_id,$VD_login,$server_ip,$session_name,$one_mysql_log);}
+}
+
 $version = '2.2.0-254';
 $build = '100301-1329';
 $mel=1;					# Mysql Error Log enabled = 1
@@ -363,7 +367,7 @@ $random = (rand(1000000, 9999999) + 10000000);
 ##### START SYSTEM_SETTINGS LOOKUP #####
 $stmt = "SELECT use_non_latin,vdc_header_date_format,vdc_customer_date_format,vdc_header_phone_format,webroot_writable,timeclock_end_of_day,vtiger_url,enable_vtiger_integration,outbound_autodial_active,enable_second_webform,user_territories_active FROM system_settings;";
 $rslt=mysqli_query($stmt, $link);
-	if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01001',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+mel($mel, $NOW_TIME, $link, $stmt, '01001', $VD_login, $server_ip, $session_name, $one_mysql_log);
 if ($DB) {echo "$stmt\n";}
 $qm_conf_ct = mysqli_num_rows($rslt);
 if ($qm_conf_ct > 0)
@@ -441,7 +445,7 @@ $browser = getenv("HTTP_USER_AGENT");
 $script_name = getenv("SCRIPT_NAME");
 $server_name = getenv("SERVER_NAME");
 $server_port = getenv("SERVER_PORT");
-if (eregi("443",$server_port)) {$HTTPprotocol = 'https://';}
+if (preg_match("443",$server_port)) {$HTTPprotocol = 'https://';}
   else {$HTTPprotocol = 'http://';}
 if (($server_port == '80') or ($server_port == '443') ) {$server_port='';}
 else {$server_port = "$CL$server_port";}
@@ -504,7 +508,7 @@ if ($campaign_login_list > 0)
 			$stmt="UPDATE vicidial_users SET shift_override_flag='1' where user='$VD_login' and pass='$VD_pass';";
 			if ($DB) {echo "|$stmt|\n";}
 			$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01059',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+			mel($mel, $NOW_TIME, $link, $stmt, '01059', $VD_login, $server_ip, $session_name, $one_mysql_log);
 			echo "<!-- Shift Override entered for $VD_login by $MGR_login -->\n";
 
 			### Add a record to the vicidial_admin_log
@@ -514,7 +518,7 @@ if ($campaign_login_list > 0)
 			$stmt="INSERT INTO vicidial_admin_log set event_date='$NOW_TIME', user='$MGR_login', ip_address='$ip', event_section='AGENT', event_type='OVERRIDE', record_id='$VD_login', event_code='МЕНЕДЖЕР Переопределить OF AGENT SHIFT ENFORCEMENT', event_sql=\"$SQL_log\", event_notes='user: $VD_login';";
 			if ($DB) {echo "|$stmt|\n";}
 			$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01060',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+				mel($mel, $NOW_TIME, $link, $stmt, '01060', $VD_login, $server_ip, $session_name, $one_mysql_log);
 			}
 		}
 
@@ -522,7 +526,7 @@ if ($campaign_login_list > 0)
 	$stmt="SELECT campaign_id,campaign_name from vicidial_campaigns where active='Y' $LOGallowed_campaignsSQL order by campaign_id;";
 	if ($non_latin > 0) {$rslt=mysqli_query("SET NAMES 'UTF8'");}
 	$rslt=mysqli_query($stmt, $link);
-				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01004',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+		mel($mel, $NOW_TIME, $link, $stmt, '01004', $VD_login, $server_ip, $session_name, $one_mysql_log);
 	$camps_to_print = mysqli_num_rows($rslt);
 
 	$o=0;
@@ -742,7 +746,7 @@ echo "<TD WIDTH=100 ALIGN=RIGHT VALIGN=TOP  NOWRAP><a href=\"../agc_en/vicidial.
 		$stmt="SELECT phone_login,phone_pass from vicidial_users where user='$VD_login' and pass='$VD_pass' and user_level > 0 and active='Y';";
 		if ($DB) {echo "|$stmt|\n";}
 		$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01005',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+			mel($mel, $NOW_TIME, $link, $stmt, '01005', $VD_login, $server_ip, $session_name, $one_mysql_log);
 		$row=mysqli_fetch_row($rslt);
 		$phone_login=$row[0];
 		$phone_pass=$row[1];
@@ -832,7 +836,7 @@ $VDloginDISPLAY=0;
 	$stmt="SELECT count(*) from vicidial_users where user='$VD_login' and pass='$VD_pass' and user_level > 0 and active='Y';";
 	if ($DB) {echo "|$stmt|\n";}
 	$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01006',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+		mel($mel, $NOW_TIME, $link, $stmt, '01006', $VD_login, $server_ip, $session_name, $one_mysql_log);
 	$row=mysqli_fetch_row($rslt);
 	$auth=$row[0];
 
@@ -843,7 +847,7 @@ $VDloginDISPLAY=0;
 		##### grab the full name of the agent
 		$stmt="SELECT full_name,user_level,hotkeys_active,agent_choose_ingroups,scheduled_callbacks,agentonly_callbacks,agentcall_manual,vicidial_recording,vicidial_transfers,closer_default_blended,user_group,vicidial_recording_override,alter_custphone_override,alert_enabled,agent_shift_enforcement_override,shift_override_flag,allow_alerts,closer_campaigns,agent_choose_territories,custom_one,custom_two,custom_three,custom_four,custom_five from vicidial_users where user='$VD_login' and pass='$VD_pass'";
 		$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01007',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+			mel($mel, $NOW_TIME, $link, $stmt, '01007', $VD_login, $server_ip, $session_name, $one_mysql_log);
 		$row=mysqli_fetch_row($rslt);
 		$LOGfullname =							$row[0];
 		$user_level =							$row[1];
@@ -877,7 +881,7 @@ $VDloginDISPLAY=0;
 		### Gather timeclock and shift enforcement restriction settings
 		$stmt="SELECT forced_timeclock_login,shift_enforcement,group_shifts,agent_status_viewable_groups,agent_status_view_time from vicidial_user_groups where user_group='$VU_user_group';";
 		$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01052',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+			mel($mel, $NOW_TIME, $link, $stmt, '01052', $VD_login, $server_ip, $session_name, $one_mysql_log);
 		$row=mysqli_fetch_row($rslt);
 		$forced_timeclock_login =	$row[0];
 		$shift_enforcement =		$row[1];
@@ -913,7 +917,7 @@ $VDloginDISPLAY=0;
 			##### grab timeclock logged-in time for each user #####
 			$stmt="SELECT event from vicidial_timeclock_log where user='$VD_login' and event_epoch >= '$EoD' order by timeclock_id desc limit 1;";
 			$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01053',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+				mel($mel, $NOW_TIME, $link, $stmt, '01053', $VD_login, $server_ip, $session_name, $one_mysql_log);
 			$events_to_parse = mysqli_num_rows($rslt);
 			if ($events_to_parse > 0)
 				{
@@ -945,7 +949,7 @@ $VDloginDISPLAY=0;
 
 				$stmt="SELECT shift_id,shift_start_time,shift_length,shift_weekdays from vicidial_shifts where $LOGgroup_shiftsSQL order by shift_id";
 				$rslt=mysqli_query($stmt, $link);
-					if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01056',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+					mel($mel, $NOW_TIME, $link, $stmt, '01056', $VD_login, $server_ip, $session_name, $one_mysql_log);
 				$shifts_to_print = mysqli_num_rows($rslt);
 
 				$o=0;
@@ -1023,7 +1027,7 @@ $VDloginDISPLAY=0;
 
 		$stmt="SELECT allowed_campaigns from vicidial_user_groups where user_group='$VU_user_group';";
 		$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01008',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+			mel($mel, $NOW_TIME, $link, $stmt, '01008', $VD_login, $server_ip, $session_name, $one_mysql_log);
 		$row=mysqli_fetch_row($rslt);
 		$LOGallowed_campaigns		=$row[0];
 
@@ -1058,7 +1062,7 @@ echo "<TD WIDTH=100 ALIGN=RIGHT VALIGN=TOP  NOWRAP><a href=\"../agc_en/vicidial.
 		$stmt="SELECT count(*) FROM vicidial_campaigns where campaign_id='$VD_campaign' and active='Y';";
 		if ($DB) {echo "|$stmt|\n";}
 		$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01009',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+			mel($mel, $NOW_TIME, $link, $stmt, '01009', $VD_login, $server_ip, $session_name, $one_mysql_log);
 		$row=mysqli_fetch_row($rslt);
 		$CAMPactive=$row[0];
 		if($CAMPactive>0)
@@ -1070,7 +1074,7 @@ echo "<TD WIDTH=100 ALIGN=RIGHT VALIGN=TOP  NOWRAP><a href=\"../agc_en/vicidial.
 			##### grab the statuses that can be used for dispositioning by an agent
 			$stmt="SELECT status,status_name FROM vicidial_statuses WHERE $selectableSQL status != 'NEW' order by status limit 50;";
 			$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01010',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+				mel($mel, $NOW_TIME, $link, $stmt, '01010', $VD_login, $server_ip, $session_name, $one_mysql_log);
 			if ($DB) {echo "$stmt\n";}
 			$VD_statuses_ct = mysqli_num_rows($rslt);
 			$i=0;
@@ -1087,7 +1091,7 @@ echo "<TD WIDTH=100 ALIGN=RIGHT VALIGN=TOP  NOWRAP><a href=\"../agc_en/vicidial.
 			##### grab the campaign-specific statuses that can be used for dispositioning by an agent
 			$stmt="SELECT status,status_name FROM vicidial_campaign_statuses WHERE $selectableSQL status != 'NEW' and campaign_id='$VD_campaign' order by status limit 80;";
 			$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01011',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+				mel($mel, $NOW_TIME, $link, $stmt, '01011', $VD_login, $server_ip, $session_name, $one_mysql_log);
 			if ($DB) {echo "$stmt\n";}
 			$VD_statuses_camp = mysqli_num_rows($rslt);
 			$j=0;
@@ -1108,7 +1112,7 @@ echo "<TD WIDTH=100 ALIGN=RIGHT VALIGN=TOP  NOWRAP><a href=\"../agc_en/vicidial.
 			##### grab the campaign-specific HotKey statuses that can be used for dispositioning by an agent
 			$stmt="SELECT hotkey,status,status_name FROM vicidial_campaign_hotkeys WHERE selectable='Y' and status != 'NEW' and campaign_id='$VD_campaign' order by hotkey limit 9;";
 			$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01012',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+				mel($mel, $NOW_TIME, $link, $stmt, '01012', $VD_login, $server_ip, $session_name, $one_mysql_log);
 			if ($DB) {echo "$stmt\n";}
 			$HK_statuses_camp = mysqli_num_rows($rslt);
 			$w=0;
@@ -1139,7 +1143,7 @@ echo "<TD WIDTH=100 ALIGN=RIGHT VALIGN=TOP  NOWRAP><a href=\"../agc_en/vicidial.
 			##### grab the campaign settings
 			$stmt="SELECT park_ext,park_file_name,web_form_address,allow_closers,auto_dial_level,dial_timeout,dial_prefix,campaign_cid,campaign_vdad_exten,campaign_rec_exten,campaign_recording,campaign_rec_filename,campaign_script,get_call_launch,am_message_exten,xferconf_a_dtmf,xferconf_a_number,xferconf_b_dtmf,xferconf_b_number,alt_number_dialing,scheduled_callbacks,wrapup_seconds,wrapup_message,closer_campaigns,use_internal_dnc,allcalls_delay,omit_phone_code,agent_pause_codes_active,no_hopper_leads_logins,campaign_allow_inbound,manual_dial_list_id,default_xfer_group,xfer_groups,disable_alter_custphone,display_queue_count,manual_dial_filter,agent_clipboard_copy,use_campaign_dnc,three_way_call_cid,dial_method,three_way_dial_prefix,web_form_target,vtiger_screen_login,agent_allow_group_alias,default_group_alias,quick_transfer_button,prepopulate_transfer_preset,view_calls_in_queue,view_calls_in_queue_launch,call_requeue_button,pause_after_each_call,no_hopper_dialing,agent_dial_owner_only,agent_display_dialable_leads,web_form_address_two,agent_select_territories,crm_popup_login,crm_login_address,timer_action,timer_action_message,timer_action_seconds,start_call_url,dispo_call_url,xferconf_c_number,xferconf_d_number,xferconf_e_number FROM vicidial_campaigns where campaign_id = '$VD_campaign';";
 			$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01013',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+				mel($mel, $NOW_TIME, $link, $stmt, '01013', $VD_login, $server_ip, $session_name, $one_mysql_log);
 			if ($DB) {echo "$stmt\n";}
 			$row=mysqli_fetch_row($rslt);
 			$park_ext =					$row[0];
@@ -1271,7 +1275,7 @@ echo "<TD WIDTH=100 ALIGN=RIGHT VALIGN=TOP  NOWRAP><a href=\"../agc_en/vicidial.
 				$stmt = "select caller_id_number from groups_alias where group_alias_id='$default_group_alias';";
 				if ($DB) {echo "$stmt\n";}
 				$rslt=mysqli_query($stmt, $link);
-			if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01055',$VD_login,$server_ip,$session_name,$one_mysql_log);}
+					mel($mel, $NOW_TIME, $link, $stmt, '01055', $VD_login, $server_ip, $session_name, $one_mysql_log);
 				$VDIG_cidnum_ct = mysqli_num_rows($rslt);
 				if ($VDIG_cidnum_ct > 0)
 					{
@@ -1320,7 +1324,7 @@ echo "<TD WIDTH=100 ALIGN=RIGHT VALIGN=TOP  NOWRAP><a href=\"../agc_en/vicidial.
 			$closer_campaigns = preg_replace("/ /","','",$closer_campaigns);
 			$closer_campaigns = "'$closer_campaigns'";
 
-			if ( (preg_match('Y',$agent_pause_codes_active)) or (ereg('FORCE',$agent_pause_codes_active)) )
+			if ( (preg_match('Y',$agent_pause_codes_active)) or (preg_match('FORCE',$agent_pause_codes_active)) )
 				{
 				##### grab the pause codes for this campaign
 				$stmt="SELECT pause_code,pause_code_name FROM vicidial_pause_codes WHERE campaign_id='$VD_campaign' order by pause_code limit 50;";
