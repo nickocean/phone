@@ -278,17 +278,14 @@
 # 100301-1329 - Changed AGENTDIRECT user selection launching to AGENTS link next to number-to-dial field
 #
 
-function mel($mel, $time, $link, $stmt, $query_id, $VD_login, $server_ip, $session_name, $one_mysql_log) {
-	if ($mel > 0) {mysql_error_logging($time,$link,$mel,$stmt,$query_id,$VD_login,$server_ip,$session_name,$one_mysql_log);}
-}
-
 $version = '2.2.0-254';
 $build = '100301-1329';
 $mel=1;					# Mysql Error Log enabled = 1
 $mysql_log_count=64;
 $one_mysql_log=0;
 
-require("dbconnect.php");
+require_once("dbconnect.php");
+require_once "functions.php";
 
 if (isset($_GET["DB"]))						    {$DB=$_GET["DB"];}
         elseif (isset($_POST["DB"]))            {$DB=$_POST["DB"];}
@@ -471,15 +468,11 @@ if ($campaign_login_list > 0)
 		{
 		$stmt="SELECT user_group from vicidial_users where user='$VD_login' and pass='$VD_pass';";
 		if ($non_latin > 0) {$rslt=mysqli_query("SET NAMES 'UTF8'");}
-		$rslt=mysqli_query($stmt, $link);
-				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01002',$VD_login,$server_ip,$session_name,$one_mysql_log);}
-		$row=mysqli_fetch_row($rslt);
+		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01002',$VD_login,$server_ip,$session_name,$one_mysql_log);
 		$VU_user_group=$row[0];
 
 		$stmt="SELECT allowed_campaigns from vicidial_user_groups where user_group='$VU_user_group';";
-		$rslt=mysqli_query($stmt, $link);
-				if ($mel > 0) {mysql_error_logging($NOW_TIME,$link,$mel,$stmt,'01003',$VD_login,$server_ip,$session_name,$one_mysql_log);}
-		$row=mysqli_fetch_row($rslt);
+		$row = queryFetch($stmt, $link, $NOW_TIME,$link,$mel,$stmt,'01003',$VD_login,$server_ip,$session_name,$one_mysql_log);
 		if ( (!preg_match("ALL-CAMPAIGNS",$row[0])) )
 			{
 			$LOGallowed_campaignsSQL = preg_replace(' -','',$row[0]);
