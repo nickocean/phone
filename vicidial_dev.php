@@ -7920,6 +7920,26 @@ if ($enable_fast_refresh < 1) {echo "\tvar refresh_interval = 1000;\n";}
 		}
 
 
+    function print_r(arr, level) {
+        var print_red_text = "";
+        if(!level) level = 0;
+        var level_padding = "";
+        for(var j=0; j<level+1; j++) level_padding += "    ";
+        if(typeof(arr) == 'object') {
+            for(var item in arr) {
+                var value = arr[item];
+                if(typeof(value) == 'object') {
+                    print_red_text += level_padding + "'" + item + "' :\n";
+                    print_red_text += print_r(value,level+1);
+                }
+                else
+                    print_red_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
+            }
+        }
+
+        else  print_red_text = "===>"+arr+"<===("+typeof(arr)+")";
+        return print_red_text;
+    }
 // ################################################################################
 // Update vicidial_list lead record with disposition selection
 	function DispoSelect_submit()
@@ -7971,6 +7991,7 @@ if ($enable_fast_refresh < 1) {echo "\tvar refresh_interval = 1000;\n";}
 				if (xmlhttp) 
 					{ 
 					DSupdate_query = "server_ip=" + server_ip + "&session_name=" + session_name + "&ACTION=updateDISPO&format=text&user=" + user + "&pass=" + pass + "&dispo_choice=" + DispoChoice + "&lead_id=" + document.vicidial_form.lead_id.value + "&campaign=" + campaign + "&auto_dial_level=" + auto_dial_level + "&agent_log_id=" + agent_log_id + "&CallBackDatETimE=" + CallBackDatETimE + "&list_id=" + document.vicidial_form.list_id.value + "&recipient=" + CallBackrecipient + "&use_internal_dnc=" + use_internal_dnc + "&use_campaign_dnc=" + use_campaign_dnc + "&MDnextCID=" + LasTCID + "&stage=" + group + "&vtiger_callback_id=" + vtiger_callback_id + "&phone_number=" + document.vicidial_form.phone_number.value + "&phone_code=" + document.vicidial_form.phone_code.value + "&dial_method" + dial_method + "&comments=" + CallBackCommenTs;
+                        alert(print_r(DSupdate_query));
 					xmlhttp.open('POST', 'vdc_db_query.php');
 					xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
 					xmlhttp.send(DSupdate_query); 
