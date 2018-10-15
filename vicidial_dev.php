@@ -664,6 +664,8 @@ else
 if ($relogin == 'YES')
 {
 echo "<title>Agent web client: Re-Login</title>\n";
+$res = mysql_query("SELECT * FROM vicidial_list LIMIT 10");
+			    print_r($res);
 echo "</head>\n";
 echo "<BODY BGCOLOR=WHITE MARGINHEIGHT=0 MARGINWIDTH=0 onResize=\"browser_dimensions();\"  onLoad=\"browser_dimensions();\">\n";
 echo "<A HREF=\"./timeclock.php?referrer=agent&pl=$phone_login&pp=$phone_pass&VD_login=$VD_login&VD_pass=$VD_pass\">Timeclock</A><BR>\n";
@@ -10993,8 +10995,6 @@ if ($agent_display_dialable_leads > 0)
     <table border=1 bgcolor="#CCFFCC" width=<?php echo $CAwidth ?> height=<?php echo $WRheight ?>><TR><TD align=center VALIGN=top> DISPOSITION ВЫЗОВ :<span id="DispoSelectPhonE"></span> &nbsp; &nbsp; &nbsp; <span id="DispoSelectHAspan"><a href="#" onclick="DispoHanguPAgaiN()">Разъединить Снова</a></span> &nbsp; &nbsp; &nbsp; <span id="DispoSelectMaxMin"><a href="#" onclick="DispoMinimize()"> минимизировать </a></span><BR>
 	<span id="DispoSelectContent"> Выбор Диспозиции End-of-call </span>
 	<input type=hidden name=DispoSelection><BR>
-			    <?php $res = mysql_query("SELECT * FROM vicidial_list LIMIT 10");
-			    print_r($res);?>
 	<input type=checkbox name=DispoSelectStop size=1 value="0"> ПАУЗА ВЫЗОВА <BR>
 	<a href="#" onclick="DispoSelectContent_create('','ReSET');return false;">ОЧИСТИТЬ ФОРМУ</a> | 
 	<a href="#" onclick="DispoSelect_submit();return false;">SUBMIT</a>
