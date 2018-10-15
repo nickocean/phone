@@ -664,8 +664,6 @@ else
 if ($relogin == 'YES')
 {
 echo "<title>Agent web client: Re-Login</title>\n";
-$res = mysql_query("SELECT * FROM vicidial_list LIMIT 10");
-			    print_r($res);
 echo "</head>\n";
 echo "<BODY BGCOLOR=WHITE MARGINHEIGHT=0 MARGINWIDTH=0 onResize=\"browser_dimensions();\"  onLoad=\"browser_dimensions();\">\n";
 echo "<A HREF=\"./timeclock.php?referrer=agent&pl=$phone_login&pp=$phone_pass&VD_login=$VD_login&VD_pass=$VD_pass\">Timeclock</A><BR>\n";
@@ -8000,9 +7998,16 @@ if ($enable_fast_refresh < 1) {echo "\tvar refresh_interval = 1000;\n";}
                     xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
                     xmlhttp.send();*/
 
+
+
 					xmlhttp.open('POST', 'vdc_db_query.php');
 					xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
-					xmlhttp.send(DSupdate_query); 
+					xmlhttp.send(DSupdate_query);
+
+					<?php echo '<pre>';
+					print_r($_POST);
+					echo '</pre>'?>
+
 					xmlhttp.onreadystatechange = function() 
 						{ 
 					//	alert(DSupdate_query + "\n" +xmlhttp.responseText);
