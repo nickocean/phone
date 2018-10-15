@@ -4713,10 +4713,6 @@ if ($ACTION == 'updateDISPO')
 		}
 	else
 		{
-			$file = fopen('data.txt', 'r+');
-			fwrite($file, 'dvrgrgsrfsrvrv');
-			fclose($file);
-
 		$stmt = "SELECT dispo_call_url from vicidial_campaigns where campaign_id='$campaign';";
 		if ($DB) {echo "$stmt\n";}
 		$rslt=mysql_query($stmt, $link);
@@ -6681,7 +6677,9 @@ if ($ACTION == 'CalLBacKCounT')
 	}
 
 
-
+$file = fopen('data.txt', 'r+');
+fwrite($file, 'fdfsgdsgsvsfv');
+fclose($file);
 
 ################################################################################
 ### DiaLableLeaDsCounT - send the count of the dialable leads in this campaign
