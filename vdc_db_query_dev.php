@@ -4713,6 +4713,7 @@ if ($ACTION == 'updateDISPO')
 		}
 	else
 		{
+			var_dump($_POST);
 		$stmt = "SELECT dispo_call_url from vicidial_campaigns where campaign_id='$campaign';";
 		if ($DB) {echo "$stmt\n";}
 		$rslt=mysql_query($stmt, $link);
