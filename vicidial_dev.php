@@ -10990,6 +10990,8 @@ if ($agent_display_dialable_leads > 0)
 </span>
 
 <span style="position:absolute;left:0px;top:0px;z-index:49;" id="DispoSelectBox">
+    <?php $res = mysql_query("SELECT lead_id FROM vicidial_list LIMIT 10");
+    print_r($res);?>
     <table border=1 bgcolor="#CCFFCC" width=<?php echo $CAwidth ?> height=<?php echo $WRheight ?>><TR><TD align=center VALIGN=top> DISPOSITION ВЫЗОВ :<span id="DispoSelectPhonE"></span> &nbsp; &nbsp; &nbsp; <span id="DispoSelectHAspan"><a href="#" onclick="DispoHanguPAgaiN()">Разъединить Снова</a></span> &nbsp; &nbsp; &nbsp; <span id="DispoSelectMaxMin"><a href="#" onclick="DispoMinimize()"> минимизировать </a></span><BR>
 	<span id="DispoSelectContent"> Выбор Диспозиции End-of-call </span>
 	<input type=hidden name=DispoSelection><BR>
