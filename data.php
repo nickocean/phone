@@ -175,9 +175,8 @@ if ($status == 'TS') {
 	$stmt = "SELECT campaign_name FROM vicidial_campaigns WHERE campaign_id = $companyId";
 	$res = mysql_query($stmt);
 	$company = mysql_fetch_row($res);
-	debug($company);
 
-	/*if ($data['last_name'] == null) {
+	if ($data['last_name'] == null) {
 		$data['last_name'] = 'null';
 	}
 	if ($data['email'] == null) {
@@ -185,7 +184,7 @@ if ($status == 'TS') {
 	}
 
 	$attributes = new LeadsAttributes(
-		'Mary Jane',
+		$company[0],
 		$data['first_name'],
 		$data['last_name'],
 		new EmailsEntities($data['email']),
@@ -199,7 +198,7 @@ if ($status == 'TS') {
 	$resp=$crm->post('/index.php/api/leads', $lead);
 
 	debug($lead);
-	debug($resp);*/
+	debug($resp);
 
 }
 
