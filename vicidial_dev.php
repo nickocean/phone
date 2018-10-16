@@ -7994,7 +7994,7 @@ if ($enable_fast_refresh < 1) {echo "\tvar refresh_interval = 1000;\n";}
 					var leadId = document.vicidial_form.lead_id.value;
                     xmlhttp.open('POST', 'data.php');
                     xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
-                    xmlhttp.send("test=1&test2=2");
+                    xmlhttp.send("lead_id="+leadId);
                         xmlhttp.onreadystatechange = function() {
                             //	alert(DSupdate_query + "\n" +xmlhttp.responseText);
 
