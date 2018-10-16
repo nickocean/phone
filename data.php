@@ -274,27 +274,22 @@ if ($status == 'TS') {
 	$crm = new OroRequest($url, $userName ,$userApiKey);
 	$resp=$crm->post('/index.php/api/leads', $lead);
 
-	debug($lead);
-	debug($resp);
-
 	// Get lead id
 	$crm = new OroRequest($url, $userName, $userApiKey);
 	$response = $crm->get('/index.php/api/leads?filter[phones]=', $data['phone_number']);
 	$arr = json_decode($response);
-	debug($arr);
-
 
 	// Add new Call
-	/*$attrs = new CallsAttributes('Test', $data['phone_number']);
+	$attrs = new CallsAttributes('Test', $data['phone_number']);
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
-	$relationships->addActivityTargets('1');
+	$relationships->addActivityTargets($arr['data'][0]['id']);
 	$call = new NewEntities('calls', $attrs, $relationships);
 	$crm = new OroRequest($url, $userName, $userApiKey);
 	$resp = $crm->post('/index.php/api/calls', $call);
 	debug($call);
-	debug($resp);*/
+	debug($resp);
 
 }
 
