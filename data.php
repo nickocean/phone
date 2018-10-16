@@ -9,4 +9,4 @@ function getData($data) {
 	fclose($file);
 }
 
-getData($_GET);
+getData($_POST);
