@@ -145,51 +145,6 @@ class Relationships {
 	public function addOrganization($id) {
 		$this->organization=['data'=>new Entities('organizations',$id)];
 	}
-	public function addStatus($status) {
-		$this->status=['data'=>new Entities('leadstatuses',$status)];
-	}
-	public function addSource($id) {
-		$this->source=['data'=>new Entities('leadsources',$id)];
-	}
-	public function addMethod($id) {
-		$this->method=['data'=>new Entities('method',$id)];
-	}
-	public function addAssignedTo($id) {
-		$this->assignedTo=['data'=>new Entities('users',$id)];
-	}
-	public function addReportsTo($id) {
-		$this->reportsTo=['data'=>new Entities('users',$id)];
-	}
-	public function addAddresses($id) {
-		$this->addresses=['data'=>new Entities('leadaddresses',$id)];
-	}
-	public function addGroups($id) {
-		$this->groups=['data'=>new Entities('users',$id)];
-	}
-	public function addAccounts($id) {
-		$this->accounts=['data'=>new Entities('users',$id)];
-	}
-	public function addDefaultInAccounts($id) {
-		$this->defaultInAccounts=['data'=>new Entities('users',$id)];
-	}
-	public function addPicture($id) {
-		$this->picture=['data'=>new Entities('users',$id)];
-	}
-	public function addContact($id) {
-		$this->contact=['data'=>new Entities('users',$id)];
-	}
-	public function addOpportunities($id) {
-		$this->opportunities=['data'=>new Entities('users',$id)];
-	}
-	public function addCompaigns($id) {
-		$this->compaign=['data'=>new Entities('compaigns',$id)];
-	}
-	public function addCustomer($id) {
-		$this->customer=['data'=>new Entities('users',$id)];
-	}
-	public function addAccount($id) {
-		$this->account=['data'=>new Entities('users',$id)];
-	}
 }
 
 function debug($data) {
@@ -219,10 +174,10 @@ if ($data['last_name'] == null) {
 	$data['last_name'] = 'null';
 }
 if ($data['email'] == null) {
-	$data['email'] = 'null';
+	$data['email'] = rand(10000,20000).'@mail.ru';
 }
 
-$attributes =new LeadsAttributes(
+$attributes = new LeadsAttributes(
 	'Mary Jane',
 	$data['first_name'],
 	$data['last_name'],
