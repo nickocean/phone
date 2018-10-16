@@ -1,4 +1,5 @@
 <?php
+print_r($_POST);
 
 $leadId = $_POST['lead_id'];
 $stmt = "SELECT count(*) FROM vicidial_list WHERE lead_id = '$leadId'";
