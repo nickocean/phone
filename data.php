@@ -111,6 +111,7 @@ class Attributes {
 	public $firstName;
 	public $lastName;
 	public $primaryEmail;
+	public $primaryPhone;
 	public $emails;
 	public $phones;
 
@@ -122,6 +123,7 @@ class Attributes {
 		$this->firstName    = $firstName;
 		$this->lastName     = $lastName;
 		$this->primaryEmail = $emails->email;
+		$this->primaryPhone = $phones->phone;
 	}
 }
 
@@ -204,16 +206,24 @@ $userName = 'dev';
 $userApiKey = '3dc80aa0c30f554de82af4ab3924d37316a998cc';
 $url="http://oro.demo";
 
-/*$attributes =new LeadsAttributes(
+$attributes =new LeadsAttributes(
 	'Mary Jane',
-	'firstName_'.rand(1000, 2000),
-	'lastName_'.rand(1000, 2000),
-	new EmailsEntities(rand(100,200).'Email@gmail.com'),
-	new PhonesEntities(rand(199999999999, 999999999999))
+	$data['first_name'],
+	function ($data) {
+		if ($data['last_name'] == null) {
+			return 'null';
+		} else {return $data['last_name'];}
+	},
+	new EmailsEntities($data['email']),
+	new PhonesEntities($data['phone_number'])
 );
 $relationships = new Relationships();
 $relationships->addOwner('1');
 $relationships->addOrganization('1');
+$relationships->addAddresses($data['address1']);
 $lead = new NewEntities( 'leads', $attributes, $relationships);
 $crm = new OroRequest($url, $userName ,$userApiKey);
-$resp=$crm->post('/index.php/api/leads', $lead);*/
+$resp=$crm->post('/index.php/api/leads', $lead);
+
+debug($lead);
+debug($resp);
