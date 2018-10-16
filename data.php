@@ -1,5 +1,7 @@
 <?php
 
+require( "dbconnect.php" );
+
 class Request {
 
 	protected $_url;
@@ -153,43 +155,51 @@ function debug($data) {
 	echo "</pre>";
 }
 
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-require( "dbconnect.php" );
+error_reporting(E_ALL);*/
+
 $leadId = $_POST['lead_id'];
-$stmt = "SELECT * FROM vicidial_list WHERE lead_id = $leadId";
-$res = mysql_query($stmt);
-$data = mysql_fetch_array($res);
-
-echo '<pre>';
-print_r($data);
-echo '</pre>';
-
+$companyId = $_POST['company_id'];
+$status = $_POST['status'];
 $userName = 'dev';
 $userApiKey = '3dc80aa0c30f554de82af4ab3924d37316a998cc';
 $url="http://oro.demo";
 
-if ($data['last_name'] == null) {
-	$data['last_name'] = 'null';
-}
-if ($data['email'] == null) {
-	$data['email'] = rand(10000,20000).'@mail.ru';
+if ($status == 'TS') {
+
+	$stmt = "SELECT * FROM vicidial_list WHERE lead_id = $leadId";
+	$res = mysql_query($stmt);
+	$data = mysql_fetch_array($res);
+
+	$stmt = "SELECT campaign_name FROM vicidial_campaigns WHERE campaign_id = $companyId";
+	$res = mysql_query($stmt);
+	$company = mysql_fetch_row($res);
+	debug($company);
+
+	/*if ($data['last_name'] == null) {
+		$data['last_name'] = 'null';
+	}
+	if ($data['email'] == null) {
+		$data['email'] = rand(10000,20000).'@mail.ru';
+	}
+
+	$attributes = new LeadsAttributes(
+		'Mary Jane',
+		$data['first_name'],
+		$data['last_name'],
+		new EmailsEntities($data['email']),
+		new PhonesEntities($data['phone_number'])
+	);
+	$relationships = new Relationships();
+	$relationships->addOwner('1');
+	$relationships->addOrganization('1');
+	$lead = new NewEntities( 'leads', $attributes, $relationships);
+	$crm = new OroRequest($url, $userName ,$userApiKey);
+	$resp=$crm->post('/index.php/api/leads', $lead);
+
+	debug($lead);
+	debug($resp);*/
+
 }
 
-$attributes = new LeadsAttributes(
-	'Mary Jane',
-	$data['first_name'],
-	$data['last_name'],
-	new EmailsEntities($data['email']),
-	new PhonesEntities($data['phone_number'])
-);
-$relationships = new Relationships();
-$relationships->addOwner('1');
-$relationships->addOrganization('1');
-$lead = new NewEntities( 'leads', $attributes, $relationships);
-$crm = new OroRequest($url, $userName ,$userApiKey);
-$resp=$crm->post('/index.php/api/leads', $lead);
-
-debug($lead);
-debug($resp);
