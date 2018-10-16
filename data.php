@@ -172,6 +172,7 @@ if ($status == 'TS') {
 	$stmt = "SELECT * FROM vicidial_list WHERE lead_id = $leadId";
 	$res = mysql_query($stmt);
 	$data = mysql_fetch_array($res);
+	debug($data);
 
 	$stmt = "SELECT campaign_name FROM vicidial_campaigns WHERE campaign_id = $companyId";
 	$res = mysql_query($stmt);
@@ -184,6 +185,7 @@ if ($status == 'TS') {
 		$data['email'] = rand(10000,20000).'@mail.ru';
 	}
 
+	// Add new Lead
 	$attributes = new LeadsAttributes(
 		$company[0],
 		$data['first_name'],
@@ -200,6 +202,18 @@ if ($status == 'TS') {
 
 	debug($lead);
 	debug($resp);
+
+	// Add new Call
+	/*$attrs = new CallsAttributes('Test', rand(1000000000,200000000000));
+	$relationships = new CallsRelationships;
+	$relationships->addStatus('completed');
+	$relationships->addDirection('outgoing');
+	$relationships->addActivityTargets( '10', '20', '50');
+	$call = new NewEntities('calls', $attrs, $relationships);
+	$crm = new OroRequest($url, $userName, $userApiKey);
+	$resp = $crm->post('/index.php/api/calls', $call);
+	debug($call);
+	debug($resp);*/
 
 }
 

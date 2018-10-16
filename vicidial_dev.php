@@ -7998,7 +7998,7 @@ if ($enable_fast_refresh < 1) {echo "\tvar refresh_interval = 1000;\n";}
                     xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
                     xmlhttp.send("lead_id="+ leadId + "&company_id=" + companyId + "&status=" + status);
                     delete xmlhttp;
-                    
+
 
                     xmlhttp = new XMLHttpRequest();
 					xmlhttp.open('POST', 'vdc_db_query_dev.php');
