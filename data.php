@@ -1,14 +1,7 @@
 <?php
 
+$data = mysql_query("SELECT * FROM vicidial_list WHERE lead_id = '{$_POST['lead_id']}'");
 
-/*function getData($data) {
-	$file = fopen('data.txt', 'r+');
-	foreach ($data as $key => $value) {
-		fwrite($file, $value);
-	}
-	fclose($file);
-}
-
-getData($_POST);*/
-
-print_r($_POST['lead_id']);
+echo '<pre>';
+print_r($data);
+echo '</pre>';
