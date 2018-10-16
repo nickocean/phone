@@ -1,7 +1,7 @@
 <?php
 
 
-function getData($data) {
+/*function getData($data) {
 	$file = fopen('data.txt', 'r+');
 	foreach ($data as $key => $value) {
 		fwrite($file, $value);
@@ -9,4 +9,6 @@ function getData($data) {
 	fclose($file);
 }
 
-getData($_POST);
+getData($_POST);*/
+
+print_r($_POST);
