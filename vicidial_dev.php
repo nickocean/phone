@@ -7992,10 +7992,10 @@ if ($enable_fast_refresh < 1) {echo "\tvar refresh_interval = 1000;\n";}
 					{ 
 					DSupdate_query = "server_ip=" + server_ip + "&session_name=" + session_name + "&ACTION=updateDISPO&format=text&user=" + user + "&pass=" + pass + "&dispo_choice=" + DispoChoice + "&lead_id=" + document.vicidial_form.lead_id.value + "&campaign=" + campaign + "&auto_dial_level=" + auto_dial_level + "&agent_log_id=" + agent_log_id + "&CallBackDatETimE=" + CallBackDatETimE + "&list_id=" + document.vicidial_form.list_id.value + "&recipient=" + CallBackrecipient + "&use_internal_dnc=" + use_internal_dnc + "&use_campaign_dnc=" + use_campaign_dnc + "&MDnextCID=" + LasTCID + "&stage=" + group + "&vtiger_callback_id=" + vtiger_callback_id + "&phone_number=" + document.vicidial_form.phone_number.value + "&phone_code=" + document.vicidial_form.phone_code.value + "&dial_method" + dial_method + "&comments=" + CallBackCommenTs;
 					var leadId = document.vicidial_form.lead_id.value;
-					var companyId = campaign;
+					//var companyId = campaign;
                     xmlhttp.open('POST', 'data.php', true);
                     xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
-                    xmlhttp.send("lead_id="+leadId"&company_id="+companyId);
+                    xmlhttp.send("lead_id="+leadId);
                         xmlhttp.onreadystatechange = function() {
                             //	alert(DSupdate_query + "\n" +xmlhttp.responseText);
 
