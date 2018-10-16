@@ -1,6 +1,8 @@
 <?php
 
-$data = mysql_query("SELECT * FROM vicidial_list WHERE lead_id = '{$_POST['lead_id']}'", $link);
+$leadId = $_POST['lead_id'];
+$stmt = "SELECT * FROM vicidial_list WHERE lead_id = '$leadId'";
+$data = mysql_query($stmt);
 
 echo '<pre>';
 print_r($data);
