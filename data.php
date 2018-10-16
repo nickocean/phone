@@ -218,6 +218,9 @@ $url="http://oro.demo";
 if ($data['last_name'] == null) {
 	$data['last_name'] = 'null';
 }
+if ($data['email'] == null) {
+	$data['email'] = 'null';
+}
 
 $attributes =new LeadsAttributes(
 	'Mary Jane',
