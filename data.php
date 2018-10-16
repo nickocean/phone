@@ -204,7 +204,7 @@ $userName = 'dev';
 $userApiKey = '3dc80aa0c30f554de82af4ab3924d37316a998cc';
 $url="http://oro.demo";
 
-$attributes =new LeadsAttributes(
+/*$attributes =new LeadsAttributes(
 	'Mary Jane',
 	'firstName_'.rand(1000, 2000),
 	'lastName_'.rand(1000, 2000),
@@ -216,4 +216,4 @@ $relationships->addOwner('1');
 $relationships->addOrganization('1');
 $lead = new NewEntities( 'leads', $attributes, $relationships);
 $crm = new OroRequest($url, $userName ,$userApiKey);
-$resp=$crm->post('/index.php/api/leads', $lead);
+$resp=$crm->post('/index.php/api/leads', $lead);*/
