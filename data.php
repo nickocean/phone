@@ -1,19 +1,5 @@
 <?php
 
-require( "dbconnect.php" );
-$leadId = $_POST['lead_id'];
-$stmt = "SELECT * FROM vicidial_list WHERE lead_id = $leadId";
-$res = mysql_query($stmt);
-$data = mysql_fetch_array($res);
-
-echo '<pre>';
-print_r($data);
-echo '</pre>';
-
-$userName = 'dev';
-$userApiKey = '3dc80aa0c30f554de82af4ab3924d37316a998cc';
-$url="http://oro.demo";
-
 class Request {
 
 	protected $_url;
@@ -173,7 +159,7 @@ class Relationships {
 		$this->reportsTo=['data'=>new Entities('users',$id)];
 	}
 	public function addAddresses($id) {
-		$this->addresses=['data'=>new Entities('users',$id)];
+		$this->addresses=['data'=>new Entities('leadaddresses',$id)];
 	}
 	public function addGroups($id) {
 		$this->groups=['data'=>new Entities('users',$id)];
@@ -193,8 +179,8 @@ class Relationships {
 	public function addOpportunities($id) {
 		$this->opportunities=['data'=>new Entities('users',$id)];
 	}
-	public function addCompaign($id) {
-		$this->compaign=['data'=>new Entities('users',$id)];
+	public function addCompaigns($id) {
+		$this->compaign=['data'=>new Entities('compaigns',$id)];
 	}
 	public function addCustomer($id) {
 		$this->customer=['data'=>new Entities('users',$id)];
@@ -203,3 +189,31 @@ class Relationships {
 		$this->account=['data'=>new Entities('users',$id)];
 	}
 }
+
+require( "dbconnect.php" );
+$leadId = $_POST['lead_id'];
+$stmt = "SELECT * FROM vicidial_list WHERE lead_id = $leadId";
+$res = mysql_query($stmt);
+$data = mysql_fetch_array($res);
+
+/*echo '<pre>';
+print_r($data);
+echo '</pre>';*/
+
+$userName = 'dev';
+$userApiKey = '3dc80aa0c30f554de82af4ab3924d37316a998cc';
+$url="http://oro.demo";
+
+/*$attributes =new LeadsAttributes(
+	'Antony Hopkins',
+	'firstName_'.rand(1000, 2000),
+	'lastName_'.rand(1000, 2000),
+	new EmailsEntities(rand(100,200).'Email@gmail.com'),
+	new PhonesEntities(rand(199999999999, 999999999999))
+);
+$relationships = new Relationships();
+$relationships->addOwner('1');
+$relationships->addOrganization('1');
+$lead = new NewEntities( 'leads', $attributes, $relationships);
+$crm = new OroRequest($url, $userName ,$userApiKey);
+$resp=$crm->post('/index.php/api/leads', $lead);*/
