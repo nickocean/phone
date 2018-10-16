@@ -139,6 +139,17 @@ class LeadsAttributes extends Attributes {
 	}
 }
 
+class CallsAttributes {
+
+	public $subject;
+	public $phoneNumber;
+
+	public function __construct($subject, $phoneNumber) {
+		$this->subject = $subject;
+		$this->phoneNumber = $phoneNumber;
+	}
+}
+
 class Relationships {
 
 	public function addOwner($id) {
@@ -146,6 +157,39 @@ class Relationships {
 	}
 	public function addOrganization($id) {
 		$this->organization=['data'=>new Entities('organizations',$id)];
+	}
+}
+
+class CallsRelationships {
+	public $callStatus;
+	public $direction;
+
+	public function addStatus($id) {
+		$this->callStatus = [
+			'data' => [
+				'type' => 'callstatuses',
+				'id' => $id
+			]
+		];
+	}
+
+	public function addDirection($id) {
+		$this->direction = [
+			'data' => [
+				'type' => 'calldirections',
+				'id' => $id
+			]
+		];
+	}
+
+	public function addActivityTargets($leadId) {
+		$this->activityTargets = [
+			'data' => [
+				[
+					'type' => 'leads',
+					'id' => $leadId
+				]
+			]];
 	}
 }
 
@@ -204,16 +248,16 @@ if ($status == 'TS') {
 	debug($resp);
 
 	// Add new Call
-	/*$attrs = new CallsAttributes('Test', rand(1000000000,200000000000));
+	$attrs = new CallsAttributes('Test', rand(1000000000,200000000000));
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
-	$relationships->addActivityTargets( '10', '20', '50');
+	$relationships->addActivityTargets($leadId);
 	$call = new NewEntities('calls', $attrs, $relationships);
 	$crm = new OroRequest($url, $userName, $userApiKey);
 	$resp = $crm->post('/index.php/api/calls', $call);
 	debug($call);
-	debug($resp);*/
+	debug($resp);
 
 }
 
