@@ -280,9 +280,10 @@ if ($status == 'TS') {
 	$response = $crm->get('/index.php/api/leads?filter[phones]=', $data['phone_number']);
 	$arr = json_decode($response);
 	debug($arr);
+	echo $arr['data'][0]['id'];
 
 	// Add new Call
-	$attrs = new CallsAttributes('Test', $data['phone_number']);
+	/*$attrs = new CallsAttributes('Test', $data['phone_number']);
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
@@ -291,7 +292,7 @@ if ($status == 'TS') {
 	$crm = new OroRequest($url, $userName, $userApiKey);
 	$resp = $crm->post('/index.php/api/calls', $call);
 	debug($call);
-	debug($resp);
+	debug($resp);*/
 
 }
 
