@@ -248,7 +248,7 @@ if ($status == 'TS') {
 	debug($resp);
 
 	// Add new Call
-	$attrs = new CallsAttributes('Test', rand(1000000000,200000000000));
+	$attrs = new CallsAttributes('Test', $data['phone_number']);
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
