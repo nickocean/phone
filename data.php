@@ -55,6 +55,31 @@ class Request {
 		curl_close($ch);
 		return $result;
 	}
+
+	public function curlGet($path, $filter) {
+
+		$wsseHeader[] = "Content-Type: application/vnd.api+json";
+		$wsseHeader[] = $this->getHeader();
+		$options = array(
+			CURLOPT_URL => $this->_url . $path . $filter,
+			CURLOPT_HTTPHEADER => $wsseHeader,
+			CURLOPT_RETURNTRANSFER => true,
+			CURLOPT_HEADER => false
+		);
+
+		debug($this->_url . $path . $filter);
+		$ch = curl_init();
+		curl_setopt_array($ch, $options);
+		$result = curl_exec($ch);
+
+
+		if (false === $result) {
+			echo curl_error($ch);
+		}
+
+		curl_close($ch);
+		return $result;
+	}
 }
 
 class OroRequest extends Request{
@@ -66,6 +91,11 @@ class OroRequest extends Request{
 	public function post($path, $data) {
 		$resp=$this->curlPost($path, json_encode(['data'=>$data]));
 		return $resp;
+	}
+
+	public function get($path, $filter) {
+		$response = $this->curlGet($path, $filter);
+		return $response;
 	}
 
 }
@@ -247,8 +277,14 @@ if ($status == 'TS') {
 	debug($lead);
 	debug($resp);
 
+	// Get lead id
+	$crm = new OroRequest($url, $userName, $userApiKey);
+	$response = $crm->get('/index.php/api/leads?filter[phones]=', $data['phone_number']);
+	debug($response);
+
+
 	// Add new Call
-	$attrs = new CallsAttributes('Test', $data['phone_number']);
+	/*$attrs = new CallsAttributes('Test', $data['phone_number']);
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
@@ -257,7 +293,7 @@ if ($status == 'TS') {
 	$crm = new OroRequest($url, $userName, $userApiKey);
 	$resp = $crm->post('/index.php/api/calls', $call);
 	debug($call);
-	debug($resp);
+	debug($resp);*/
 
 }
 
