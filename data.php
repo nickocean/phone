@@ -196,16 +196,16 @@ $stmt = "SELECT * FROM vicidial_list WHERE lead_id = $leadId";
 $res = mysql_query($stmt);
 $data = mysql_fetch_array($res);
 
-/*echo '<pre>';
+echo '<pre>';
 print_r($data);
-echo '</pre>';*/
+echo '</pre>';
 
 $userName = 'dev';
 $userApiKey = '3dc80aa0c30f554de82af4ab3924d37316a998cc';
 $url="http://oro.demo";
 
-/*$attributes =new LeadsAttributes(
-	'Antony Hopkins',
+$attributes =new LeadsAttributes(
+	'Mary Jane',
 	'firstName_'.rand(1000, 2000),
 	'lastName_'.rand(1000, 2000),
 	new EmailsEntities(rand(100,200).'Email@gmail.com'),
@@ -216,4 +216,4 @@ $relationships->addOwner('1');
 $relationships->addOrganization('1');
 $lead = new NewEntities( 'leads', $attributes, $relationships);
 $crm = new OroRequest($url, $userName ,$userApiKey);
-$resp=$crm->post('/index.php/api/leads', $lead);*/
+$resp=$crm->post('/index.php/api/leads', $lead);
