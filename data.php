@@ -191,7 +191,9 @@ class Relationships {
 		$this->account=['data'=>new Entities('users',$id)];
 	}
 }
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 require( "dbconnect.php" );
 $leadId = $_POST['lead_id'];
 $stmt = "SELECT * FROM vicidial_list WHERE lead_id = $leadId";
