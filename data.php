@@ -279,7 +279,7 @@ if ($status == 'TS') {
 	$crm = new OroRequest($url, $userName, $userApiKey);
 	$response = $crm->get('/index.php/api/leads?filter[phones]=', $data['phone_number']);
 	$arr1 = (array) json_decode($response);
-	$arr2 = (array) $arr1['data'];
+	$arr2 = (array) $arr1['data'][0];
 	debug($arr2);
 
 
