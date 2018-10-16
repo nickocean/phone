@@ -280,7 +280,8 @@ if ($status == 'TS') {
 	// Get lead id
 	$crm = new OroRequest($url, $userName, $userApiKey);
 	$response = $crm->get('/index.php/api/leads?filter[phones]=', $data['phone_number']);
-	debug($response);
+	$arr = json_decode($response);
+	debug($arr);
 
 
 	// Add new Call
