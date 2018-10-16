@@ -252,7 +252,7 @@ if ($status == 'TS') {
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
-	$relationships->addActivityTargets($leadId);
+	$relationships->addActivityTargets('1');
 	$call = new NewEntities('calls', $attrs, $relationships);
 	$crm = new OroRequest($url, $userName, $userApiKey);
 	$resp = $crm->post('/index.php/api/calls', $call);
