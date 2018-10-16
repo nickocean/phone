@@ -6677,10 +6677,6 @@ if ($ACTION == 'CalLBacKCounT')
 	}
 
 
-$file = fopen('data.txt', 'r+');
-fwrite($file, 'fdfsgdsgsvsfv');
-fclose($file);
-
 ################################################################################
 ### DiaLableLeaDsCounT - send the count of the dialable leads in this campaign
 ################################################################################
