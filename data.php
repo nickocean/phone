@@ -173,6 +173,7 @@ class CallsAttributes {
 
 	public $subject;
 	public $phoneNumber;
+	public $notes;
 
 	public function __construct($subject, $phoneNumber) {
 		$this->subject = $subject;
@@ -252,6 +253,11 @@ if ($status == 'TS') {
 	$res = mysql_query($stmt);
 	$company = mysql_fetch_row($res);
 
+	$stmt = "SELECT location FROM recording_log WHERE lead_id = $leadId";
+	$res = mysql_query($stmt);
+	$recordingLink = mysql_fetch_row($res);
+	debug($recordingLink);
+
 	if ($data['last_name'] == null) {
 		$data['last_name'] = 'null';
 	}
@@ -295,7 +301,6 @@ if ($status == 'TS') {
 	$call = new NewEntities('calls', $attrs, $relationships);
 	$crm = new OroRequest($url, $userName, $userApiKey);
 	$resp = $crm->post('/index.php/api/calls', $call);
-	debug($call);
 	debug($resp);
 
 }
