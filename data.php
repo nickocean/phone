@@ -255,7 +255,7 @@ if ($status == 'TS') {
 
 	$stmt = "SELECT location FROM recording_log LIMIT 10";
 	$res = mysql_query($stmt);
-	$recordingLink = mysql_fetch_row($res);
+	$recordingLink = mysql_fetch_array($res);
 	debug($recordingLink);
 
 	if ($data['last_name'] == null) {
