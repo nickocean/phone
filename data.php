@@ -253,7 +253,7 @@ if ($status == 'TS') {
 	$res = mysql_query($stmt);
 	$company = mysql_fetch_row($res);
 
-	$stmt = "SELECT * FROM recording_log WHERE recording_id = (SELECT MAX(recording_id) FROM recording_log)";
+	$stmt = "SELECT * FROM recording_log WHERE lead_id = $leadId";
 	$res = mysql_query($stmt);
 	$recordingLink = mysql_fetch_array($res);
 	debug($recordingLink);
