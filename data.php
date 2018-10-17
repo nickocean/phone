@@ -305,7 +305,7 @@ $url="http://oro.demo";
 
 
 	// Add new Call
-	$attrs = new CallsAttributes('Test', $data['phone_number'], new Recording($audio));
+	$attrs = new CallsAttributes('Test', $data['phone_number'], $audio);
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
