@@ -125,13 +125,6 @@ class PhonesEntities{
 	}
 }
 
-class Recording {
-	public $html;
-	public function __construct($html) {
-		$this->html = $html;
-	}
-}
-
 class NewEntities {
 	public $type;
 	public $relationships;
@@ -185,7 +178,7 @@ class CallsAttributes {
 	public function __construct($subject, $phoneNumber, $notes) {
 		$this->subject = $subject;
 		$this->phoneNumber = $phoneNumber;
-		$this->notes = [$notes];
+		$this->notes = $notes;
 	}
 }
 
