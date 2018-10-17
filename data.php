@@ -255,8 +255,9 @@ if ($status == 'TS') {
 
 	$stmt = "SELECT * FROM recording_log WHERE lead_id = $leadId";
 	$res = mysql_query($stmt);
-	$recordingLink = mysql_fetch_array($res);
-	debug($recordingLink);
+	$recording = mysql_fetch_array($res);
+	debug($recording);
+	echo 'http://188.40.225.133/RECORDINGS/MP3/' . $recording['filename'] . '-all.mp3';
 
 	if ($data['last_name'] == null) {
 		$data['last_name'] = 'null';
