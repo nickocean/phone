@@ -175,9 +175,10 @@ class CallsAttributes {
 	public $phoneNumber;
 	public $notes;
 
-	public function __construct($subject, $phoneNumber) {
+	public function __construct($subject, $phoneNumber, $notes) {
 		$this->subject = $subject;
 		$this->phoneNumber = $phoneNumber;
+		$this->notes = $notes;
 	}
 }
 
@@ -256,8 +257,8 @@ if ($status == 'TS') {
 	$stmt = "SELECT * FROM recording_log WHERE lead_id = $leadId";
 	$res = mysql_query($stmt);
 	$recording = mysql_fetch_array($res);
+	$recName = 'http://188.40.225.133/RECORDINGS/MP3/' . $recording['filename'] . '-all.mp3';
 	debug($recording);
-	echo 'http://188.40.225.133/RECORDINGS/MP3/' . $recording['filename'] . '-all.mp3';
 
 	if ($data['last_name'] == null) {
 		$data['last_name'] = 'null';
@@ -267,7 +268,7 @@ if ($status == 'TS') {
 	}
 
 	// Add new Lead
-	/*$attributes = new LeadsAttributes(
+	$attributes = new LeadsAttributes(
 		$company[0],
 		$data['first_name'],
 		$data['last_name'],
@@ -294,7 +295,7 @@ if ($status == 'TS') {
 
 
 	// Add new Call
-	$attrs = new CallsAttributes('Test', $data['phone_number']);
+	$attrs = new CallsAttributes('Test', $data['phone_number'], $recName);
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
@@ -302,7 +303,7 @@ if ($status == 'TS') {
 	$call = new NewEntities('calls', $attrs, $relationships);
 	$crm = new OroRequest($url, $userName, $userApiKey);
 	$resp = $crm->post('/index.php/api/calls', $call);
-	debug($resp);*/
+	debug($resp);
 
 }
 
