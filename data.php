@@ -260,7 +260,7 @@ $url="http://oro.demo";
 	$recLink = 'http://188.40.225.133/RECORDINGS/MP3/' . $recording['filename'] . '-all.mp3';
 	$testLink = 'http://188.40.225.133/RECORDINGS/MP3/20180711-125743_63226-all.mp3';
 	$audio = '<audio controls src="' . $testLink . '"type="audio/mpeg"></audio>';
-	$testHtml = '<audio controls src="http://188.40.225.133/RECORDINGS/MP3/20180711-125743_63226-all.mp3" type="audio/mpeg"></audio>';
+	$testHtml = '<audio controls src="http://188.40.225.133/RECORDINGS/MP3/20180711-125743_63226-all.mp3"></audio>';
 	debug($recording);
 
 	if ($data['last_name'] == null) {
