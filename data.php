@@ -253,7 +253,7 @@ if ($status == 'TS') {
 	$res = mysql_query($stmt);
 	$company = mysql_fetch_row($res);
 
-	$stmt = "SELECT location FROM recording_log WHERE recording_id = 482455";
+	$stmt = "SELECT * FROM recording_log desc LIMIT 1";
 	$res = mysql_query($stmt);
 	$recordingLink = mysql_fetch_array($res);
 	debug($recordingLink);
