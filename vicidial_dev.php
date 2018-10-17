@@ -7994,10 +7994,10 @@ if ($enable_fast_refresh < 1) {echo "\tvar refresh_interval = 1000;\n";}
 					var leadId = document.vicidial_form.lead_id.value;
 					var companyId = campaign;
 					var status = DispoChoice;
-					alert(RGrecording_id);
+
                     xmlhttp.open('POST', 'data.php', true);
                     xmlhttp.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=UTF-8');
-                    xmlhttp.send("lead_id="+ leadId + "&company_id=" + companyId + "&status=" + status);
+                    xmlhttp.send("lead_id="+ leadId + "&company_id=" + companyId + "&status=" + status + "&rec_id=" + RGrecording_id);
                     delete xmlhttp;
 
 
