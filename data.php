@@ -253,7 +253,7 @@ if ($status == 'TS') {
 	$res = mysql_query($stmt);
 	$company = mysql_fetch_row($res);
 
-	$stmt = "SELECT location FROM recording_log WHERE lead_id = $leadId";
+	$stmt = "SELECT location FROM recording_log order by id DESC LIMIT 1";
 	$res = mysql_query($stmt);
 	$recordingLink = mysql_fetch_row($res);
 	debug($recordingLink);
@@ -266,7 +266,7 @@ if ($status == 'TS') {
 	}
 
 	// Add new Lead
-	$attributes = new LeadsAttributes(
+	/*$attributes = new LeadsAttributes(
 		$company[0],
 		$data['first_name'],
 		$data['last_name'],
@@ -301,7 +301,7 @@ if ($status == 'TS') {
 	$call = new NewEntities('calls', $attrs, $relationships);
 	$crm = new OroRequest($url, $userName, $userApiKey);
 	$resp = $crm->post('/index.php/api/calls', $call);
-	debug($resp);
+	debug($resp);*/
 
 }
 
