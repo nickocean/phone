@@ -257,7 +257,9 @@ $url="http://oro.demo";
 	$stmt = "SELECT * FROM recording_log WHERE lead_id = $leadId";
 	$res = mysql_query($stmt);
 	$recording = mysql_fetch_array($res);
-	$recName = 'http://188.40.225.133/RECORDINGS/MP3/' . $recording['filename'] . '-all.mp3';
+	$recLink = 'http://188.40.225.133/RECORDINGS/MP3/' . $recording['filename'] . '-all.mp3';
+	$testLink = 'http://188.40.225.133/RECORDINGS/MP3/20180711-125743_63226-all.mp3';
+	$audio = '<audio controls src="' . $testLink . '"type="audio/mpeg"></audio>';
 	debug($recording);
 
 	if ($data['last_name'] == null) {
@@ -295,7 +297,7 @@ $url="http://oro.demo";
 
 
 	// Add new Call
-	$attrs = new CallsAttributes('Test', $data['phone_number'], $recName);
+	$attrs = new CallsAttributes('Test', $data['phone_number'], $audio);
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
