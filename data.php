@@ -125,6 +125,13 @@ class PhonesEntities{
 	}
 }
 
+class Recording {
+	public $html;
+	public function __construct($html) {
+		$this->html = $html;
+	}
+}
+
 class NewEntities {
 	public $type;
 	public $relationships;
@@ -178,7 +185,7 @@ class CallsAttributes {
 	public function __construct($subject, $phoneNumber, $notes) {
 		$this->subject = $subject;
 		$this->phoneNumber = $phoneNumber;
-		$this->notes = $notes;
+		$this->notes = [$notes];
 	}
 }
 
@@ -298,7 +305,7 @@ $url="http://oro.demo";
 
 
 	// Add new Call
-	$attrs = new CallsAttributes('Test', $data['phone_number'], $audio);
+	$attrs = new CallsAttributes('Test', $data['phone_number'], new Recording($audio));
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
