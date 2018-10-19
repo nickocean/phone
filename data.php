@@ -258,8 +258,7 @@ $url="http://oro.demo";
 	$res = mysql_query($stmt);
 	$recording = mysql_fetch_array($res);
 	$recLink = 'http://188.40.225.133/RECORDINGS/MP3/' . $recording['filename'] . '-all.mp3';
-	$testLink = 'http://188.40.225.133/RECORDINGS/MP3/20180711-125743_63226-all.mp3';
-	$audio = htmlentities('<audio controls src="' . $testLink . '"></audio>');
+	$audio = '<audio controls src="' . $recLink . '"></audio>';
 	$testHtml = '<audio controls src="http://188.40.225.133/RECORDINGS/MP3/20180711-125743_63226-all.mp3"></audio>';
 	//debug($recording);
 
@@ -292,13 +291,13 @@ $url="http://oro.demo";
 
 	// convert to object
 	$obj = (array) json_decode($response);
-	// covert to array
+	// convert to array
 	$arr = (array) $obj['data'][0];
 
 
 
 	// Add new Call
-	$attrs = new CallsAttributes('Test', $data['phone_number'], $testHtml);
+	$attrs = new CallsAttributes('Test', $data['phone_number'], $audio);
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
