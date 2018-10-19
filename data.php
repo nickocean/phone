@@ -259,9 +259,9 @@ $url="http://oro.demo";
 	$recording = mysql_fetch_array($res);
 	$recLink = 'http://188.40.225.133/RECORDINGS/MP3/' . $recording['filename'] . '-all.mp3';
 	$testLink = 'http://188.40.225.133/RECORDINGS/MP3/20180711-125743_63226-all.mp3';
-	$audio = stripslashes('<audio controls src="' . $testLink . '"></audio>');
+	$audio = htmlentities('<audio controls src="' . $testLink . '"></audio>');
 	$testHtml = '<audio controls src="http://188.40.225.133/RECORDINGS/MP3/20180711-125743_63226-all.mp3"></audio>';
-	debug($recording);
+	//debug($recording);
 
 	if ($data['last_name'] == null) {
 		$data['last_name'] = 'null';
@@ -298,7 +298,7 @@ $url="http://oro.demo";
 
 
 	// Add new Call
-	$attrs = new CallsAttributes('Test', $data['phone_number'], $audio);
+	$attrs = new CallsAttributes('Test', $data['phone_number'], $testHtml);
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
