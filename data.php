@@ -243,7 +243,7 @@ $userApiKey = '3dc80aa0c30f554de82af4ab3924d37316a998cc';
 $url="http://oro.demo";
 
 // Change status for "Anketa"!!!
-//if ($status == 'TS') {
+if ($status == 'Anketa') {
 
 	$stmt = "SELECT * FROM vicidial_list WHERE lead_id = $leadId";
 	$res = mysql_query($stmt);
@@ -260,7 +260,7 @@ $url="http://oro.demo";
 	$recLink = 'http://188.40.225.133/RECORDINGS/MP3/' . $recording['filename'] . '-all.mp3';
 	$audio = '<audio controls src="' . $recLink . '"></audio>';
 	$testHtml = '<audio controls src="http://188.40.225.133/RECORDINGS/MP3/20180711-125743_63226-all.mp3"></audio>';
-	//debug($recording);
+	debug($recording);
 
 	if ($data['last_name'] == null) {
 		$data['last_name'] = 'null';
@@ -294,8 +294,6 @@ $url="http://oro.demo";
 	// convert to array
 	$arr = (array) $obj['data'][0];
 
-
-
 	// Add new Call
 	$attrs = new CallsAttributes('Test', $data['phone_number'], $audio);
 	$relationships = new CallsRelationships;
@@ -307,5 +305,5 @@ $url="http://oro.demo";
 	$resp = $crm->post('/index.php/api/calls', $call);
 	debug($resp);
 
-//}
+}
 
