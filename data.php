@@ -271,7 +271,7 @@ if ($status == 'Anketa' || $status = 'Test') {
 
 	// Add new Lead
 	$attributes = new LeadsAttributes(
-		$company[0],
+		$data['first_name'],
 		$data['first_name'],
 		$data['last_name'],
 		new EmailsEntities($data['email']),
@@ -279,7 +279,7 @@ if ($status == 'Anketa' || $status = 'Test') {
 	);
 	$relationships = new Relationships();
 	$relationships->addOwner('1');
-	$relationships->addOrganization($companyId);
+	$relationships->addOrganization('1');
 	$lead = new NewEntities( 'leads', $attributes, $relationships);
 	$crm = new OroRequest($url, $userName ,$userApiKey);
 	$resp=$crm->post('/index.php/api/leads', $lead);
@@ -295,7 +295,7 @@ if ($status == 'Anketa' || $status = 'Test') {
 	$arr = (array) $obj['data'][0];
 
 	// Add new Call
-	$attrs = new CallsAttributes('Test', $data['phone_number'], $audio);
+	$attrs = new CallsAttributes($company[0], $data['phone_number'], $audio);
 	$relationships = new CallsRelationships;
 	$relationships->addStatus('completed');
 	$relationships->addDirection('outgoing');
