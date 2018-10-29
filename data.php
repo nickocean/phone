@@ -237,6 +237,7 @@ error_reporting(E_ALL);*/
 
 $leadId = $_POST['lead_id'];
 $companyId = $_POST['company_id'];
+debug($companyId);
 $status = $_POST['status'];
 $userName = 'nickocean';
 $userApiKey = 'ae7f5ab5e44310f9fa398b3ad514c1192e2510b0';
