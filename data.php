@@ -243,7 +243,7 @@ $userApiKey = 'ae7f5ab5e44310f9fa398b3ad514c1192e2510b0';
 $url="http://oro.demo";
 
 // Change status for "Anketa"!!!
-//if ($status == 'Anketa') {
+if ($status == 'Anketa' || $status = 'Test') {
 
 	$stmt = "SELECT * FROM vicidial_list WHERE lead_id = $leadId";
 	$res = mysql_query($stmt);
@@ -305,5 +305,5 @@ $url="http://oro.demo";
 	$resp = $crm->post('/index.php/api/calls', $call);
 	debug($resp);
 
-//}
+}
 
