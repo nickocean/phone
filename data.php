@@ -238,12 +238,12 @@ error_reporting(E_ALL);*/
 $leadId = $_POST['lead_id'];
 $companyId = $_POST['company_id'];
 $status = $_POST['status'];
-$userName = 'dev';
-$userApiKey = '3dc80aa0c30f554de82af4ab3924d37316a998cc';
+$userName = 'nickocean';
+$userApiKey = 'ae7f5ab5e44310f9fa398b3ad514c1192e2510b0';
 $url="http://oro.demo";
 
 // Change status for "Anketa"!!!
-if ($status == 'Anketa') {
+//if ($status == 'Anketa') {
 
 	$stmt = "SELECT * FROM vicidial_list WHERE lead_id = $leadId";
 	$res = mysql_query($stmt);
@@ -305,5 +305,5 @@ if ($status == 'Anketa') {
 	$resp = $crm->post('/index.php/api/calls', $call);
 	debug($resp);
 
-}
+//}
 
