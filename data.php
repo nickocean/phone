@@ -279,7 +279,7 @@ if ($status == 'Anketa' || $status = 'Test') {
 	);
 	$relationships = new Relationships();
 	$relationships->addOwner('1');
-	$relationships->addOrganization('1');
+	$relationships->addOrganization('104');
 	$lead = new NewEntities( 'leads', $attributes, $relationships);
 	$crm = new OroRequest($url, $userName ,$userApiKey);
 	$resp=$crm->post('/index.php/api/leads', $lead);
