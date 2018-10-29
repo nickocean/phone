@@ -163,9 +163,10 @@ class LeadsAttributes extends Attributes {
 
 	public $name;
 
-	public function __construct($name, $firstName, $lastName, $emails, $phones) {
+	public function __construct($name, $firstName, $lastName, $emails, $phones, $notes = null) {
 		parent::__construct($firstName, $lastName, $emails, $phones);
 		$this->name = $name;
+		$this->notes = $notes;
 	}
 }
 
@@ -275,7 +276,8 @@ if ($status == 'Anketa' || $status = 'Test') {
 		$data['first_name'],
 		$data['last_name'],
 		new EmailsEntities($data['email']),
-		new PhonesEntities($data['phone_number'])
+		new PhonesEntities($data['phone_number']),
+		$data['comments']
 	);
 	$relationships = new Relationships();
 	$relationships->addOwner('1');
