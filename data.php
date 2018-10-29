@@ -236,7 +236,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);*/
 
 $leadId = $_POST['lead_id'];
-$companyId = '"' . $_POST['company_id'] . '"';
+$companyId = "'" . $_POST['company_id'] . "'";
 $status = $_POST['status'];
 $userName = 'nickocean';
 $userApiKey = 'ae7f5ab5e44310f9fa398b3ad514c1192e2510b0';
