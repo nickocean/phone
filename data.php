@@ -237,6 +237,7 @@ error_reporting(E_ALL);*/
 
 $leadId = $_POST['lead_id'];
 $companyId = $_POST['company_id'];
+$companyId = "'" . $companyId . "'";
 debug($companyId);
 $status = $_POST['status'];
 $userName = 'nickocean';
@@ -280,7 +281,7 @@ if ($status == 'Anketa' || $status = 'Test') {
 	);
 	$relationships = new Relationships();
 	$relationships->addOwner('1');
-	$relationships->addOrganization('1');
+	$relationships->addOrganization($companyId);
 	$lead = new NewEntities( 'leads', $attributes, $relationships);
 	$crm = new OroRequest($url, $userName ,$userApiKey);
 	$resp=$crm->post('/index.php/api/leads', $lead);
